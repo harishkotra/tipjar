@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Universal Tip Jar ⚡️
 
-## Getting Started
+A simple dApp demonstrating a cross-chain tipping platform, built for the **Push Chain Hackathon**.
 
-First, run the development server:
+## Core Concept
+
+Creators and projects have audiences across many blockchains (Ethereum, Polygon, Solana, etc.), but their supporters can't easily tip them without the friction of bridging assets.
+
+The Universal Tip Jar is a Minimum Viable Product (MVP) that solves this. It's a single smart contract deployed on the **Push Chain Testnet** that can accept tips *representing* users from any blockchain. This showcases the "shared app experience" vision of Push Chain, where a single dApp serves a universal audience.
+
+[Deployed Contract](https://donut.push.network/address/0xdCFc07D4D03bB20F971898c194B10715a5d6Af91?tab=txs)
+
+<img width="1355" height="990" alt="image" src="https://github.com/user-attachments/assets/64a1f2a3-b384-4955-aceb-764b8c00fb7c" />
+
+
+## Key Features
+
+*   **Tip with Native Currency:** Send tips using the native currency of the connected chain (e.g., test PUSH on Push Chain Testnet).
+*   **Simulate Cross-Chain Tipping:** A dropdown menu allows users to specify their "source chain" (e.g., Polygon, Solana), which is recorded on-chain with the tip.
+*   **Live Tip Feed:** A real-time feed displays all tips sent to the contract, showing the tipper's address, amount, and simulated source chain.
+*   **Connect with MetaMask:** Simple, one-click wallet connection.
+*   **Built on Push Chain:** The smart contract is deployed and operates on the Push Chain Testnet.
+
+## Tech Stack
+
+*   **Smart Contract:** Solidity, OpenZeppelin Upgradeable
+*   **Frontend:** Next.js (App Router), React, TypeScript
+*   **Blockchain Interaction:** Ethers.js
+*   **Deployment:** Remix IDE
+*   **Network:** Push Chain Testnet
+
+## Getting Started: Running Locally
+
+Follow these steps to run the dApp on your machine.
+
+### Prerequisites
+
+*   [Node.js](https://nodejs.org/en/) (v16+)
+*   [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+*   [MetaMask](https://metamask.io/) browser extension
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/harishkotra/tipjar
+cd tipjar
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure the Smart Contract
+
+You need to deploy the `UniversalTipJar.sol` contract to a testnet first. We recommend using the **Push Chain Testnet**.
+
+*   **Deploy the contract** using Remix IDE (as per the previous instructions).
+*   **Crucially, call the `initialize()` function** after deployment.
+*   Copy the deployed contract address and its ABI.
+
+Once you have them, open `app/page.tsx` and replace the placeholder values:
+
+```tsx
+// app/page.tsx
+
+// --- PASTE YOUR DEPLOYED CONTRACT ADDRESS AND ABI HERE ---
+const tipJarAddress = "YOUR_DEPLOYED_CONTRACT_ADDRESS"; 
+const tipJarABI = [ /* YOUR_CONTRACT_ABI */ ];
+
+// --- CONFIGURE THE CORRECT NETWORK ---
+const PUSH_TESTNET_CHAIN_ID = '42101'; // Push Chain Testnet
+```
+
+### 4. Configure MetaMask
+
+Add the Push Chain Testnet to your MetaMask:
+*   **Network Name:** Push Chain Testnet
+*   **New RPC URL:** `https://testnet.push.org/rpc`
+*   **Chain ID:** `42101`
+*   **Currency Symbol:** `PUSH`
+*   Get test tokens from the faucet in the [Push Protocol Discord](https://discord.gg/pushprotocol).
+
+### 5. Run the dApp
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open your browser to [http://localhost:3000](http://localhost:3000) to see the dApp in action. Make sure your MetaMask is connected to the Push Chain Testnet.
